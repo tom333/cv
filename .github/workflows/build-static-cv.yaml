@@ -37,7 +37,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: static/.
           push: true
           tags: tom333/cv-static:latest
           labels: ${{ steps.meta.outputs.labels }}
