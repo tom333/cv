@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cv
+  namespace: cv
+spec:
+  selector:
+    matchLabels:
+      name: cv
+  template:
+    metadata:
+      labels:
+        name: cv
+    spec:
+      containers:
+      - name: cv
+        image: ghcr.io/tom333/cv-static:latest
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        env:
+        - name: QDRANT_HOST
+          value: http://qdrant.cv.svc.cluster.local:6333

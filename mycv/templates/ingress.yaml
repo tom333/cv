@@ -1,0 +1,24 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: cv
+  namespace: cv
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  rules:
+    - host: cv.tgu.ovh
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: cv
+              port:
+                number: 80
+
+  tls:
+    - secretName: cv-tls
+      hosts:
+        - chat.tgu.ovh
