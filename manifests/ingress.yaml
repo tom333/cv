@@ -2,7 +2,7 @@ kind: Ingress
 apiVersion: networking.k8s.io/v1
 metadata:
   name: cv
-  namespace: datalab
+  namespace: cv
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
