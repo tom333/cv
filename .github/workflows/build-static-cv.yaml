@@ -41,5 +41,5 @@ jobs:
         with:
           context: static/.
           push: true
-          tags: tom333/cv-static:latest
+          tags: ghcr.io/tom333/cv-static:latest
           labels: ${{ steps.meta.outputs.labels }}
