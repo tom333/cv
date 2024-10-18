@@ -1,14 +1,14 @@
-name: Static image
+name: Chatbot image
 
 on:
   push:
     branches: ["main"]
     paths:
-      - static/**
+      - chat_bot/**
   pull_request:
     branches: ["main"]
     paths:
-      - static/**
+      - chat_bot/**
 env:
   REGISTRY: ghcr.io
 
@@ -38,12 +38,12 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: tom333:cv-static
+          images: tom333:cv-chatbot
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: static/.
+          context: chat_bot/.
           push: true
-          tags: ghcr.io/tom333/cv-static:latest
+          tags: ghcr.io/tom333/cv-chatbot:latest
           labels: ${{ steps.meta.outputs.labels }}

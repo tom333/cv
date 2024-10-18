@@ -1,0 +1,8 @@
+langchain-community
+langchain-openai
+chainlit
+langchain_qdrant
+unstructured[md]
+openai
+tiktoken
+langgraph
