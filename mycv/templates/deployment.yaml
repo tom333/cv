@@ -46,7 +46,7 @@ spec:
           protocol: TCP
         env:
         - name: QDRANT_HOST
-          value: http://qdrant.cv.svc.cluster.local:6333
+          value: http://cv-qdrant.cv.svc.cluster.local:6333
         - name: OPENAI_API_KEY
           valueFrom:
             secretKeyRef:
