@@ -21,7 +21,7 @@ spec:
   tls:
     - secretName: cv-tls
       hosts:
-        - chat.tgu.ovh
+        - cv.tgu.ovh
 ---
 kind: Ingress
 apiVersion: networking.k8s.io/v1
