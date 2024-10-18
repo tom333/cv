@@ -22,3 +22,33 @@ spec:
         env:
         - name: QDRANT_HOST
           value: http://qdrant.cv.svc.cluster.local:6333
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatbot
+  namespace: cv
+spec:
+  selector:
+    matchLabels:
+      name: chatbot
+  template:
+    metadata:
+      labels:
+        name: chatbot
+    spec:
+      containers:
+      - name: chatbot
+        image: ghcr.io/tom333/cv-chatbot:latest
+        ports:
+        - name: http
+          containerPort: 8000
+          protocol: TCP
+        env:
+        - name: QDRANT_HOST
+          value: http://qdrant.cv.svc.cluster.local:6333
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: openai-api-key
+              key: OPENAI_API_KEY

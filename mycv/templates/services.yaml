@@ -14,3 +14,20 @@ spec:
     name: http
     targetPort: 80
     protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chatbot
+  namespace: cv
+  labels:
+    name: chatbot
+spec:
+  type: ClusterIP
+  selector:
+    name: chatbot
+  ports:
+  - port: 8000
+    name: http
+    targetPort: 8000
+    protocol: TCP

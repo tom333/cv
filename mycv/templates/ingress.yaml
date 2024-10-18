@@ -22,3 +22,28 @@ spec:
     - secretName: cv-tls
       hosts:
         - chat.tgu.ovh
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: chatbot
+  namespace: cv
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  rules:
+    - host: chatbot.tgu.ovh
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: chatbot
+              port:
+                number: 8000
+
+  tls:
+    - secretName: chatbot-tls
+      hosts:
+        - chatbot.tgu.ovh
