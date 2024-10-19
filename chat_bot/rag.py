@@ -123,7 +123,8 @@ async def init():
 @cl.on_message
 async def on_message(message: cl.Message):
     rag_chain = cl.user_session.get("rag_chain")
-
+    print("########### message ##############²²")
+    print(message)
     res = rag_chain.invoke(
         {"input": message.content},
         config=RunnableConfig(
@@ -144,5 +145,6 @@ async def on_message(message: cl.Message):
             configurable={"thread_id": "abc123"},
         ),
     )
-
+    print("#######reponse ##########")
+    print(res["chat_history"])
     await cl.Message(content=res["answer"]).send()
