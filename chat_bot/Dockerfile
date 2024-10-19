@@ -11,8 +11,8 @@ COPY rag.py ./
 COPY chainlit.md ./
 COPY .chainlit ./
 
-ENV HOST=0.0.0.0
-ENV LISTEN_PORT 8000
+ENV CHAINLIT_HOST=0.0.0.0
+ENV CHAINLIT_PORT=8000
 EXPOSE 8000
 
 CMD ["/opt/venv/bin/chainlit", "run", "rag.py"]
