@@ -9,7 +9,7 @@ RUN /opt/venv/bin/pip install -U -r requirements.txt
 COPY rag.py ./
 
 COPY chainlit.md ./
-COPY .chainlit ./
+COPY .chainlit ./chainlit
 
 ENV CHAINLIT_HOST=0.0.0.0
 ENV CHAINLIT_PORT=8000
