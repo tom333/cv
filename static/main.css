@@ -1,3 +1,7 @@
 .p_col_droite{
-    background-color: rgb(75, 195, 231);
+    background-color: rgb(150, 255, 250);
+}
+
+.download_as_pdf {
+    background-color: rgb(121, 142, 148);
 }
