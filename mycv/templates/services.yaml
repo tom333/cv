@@ -31,3 +31,20 @@ spec:
     name: http
     targetPort: 8000
     protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dynamic
+  namespace: cv
+  labels:
+    name: dynamic
+spec:
+  type: ClusterIP
+  selector:
+    name: dynamic
+  ports:
+  - port: 8051
+    name: http
+    targetPort: 8051
+    protocol: TCP

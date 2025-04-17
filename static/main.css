@@ -5,3 +5,22 @@
 .download_as_pdf {
     background-color: rgb(121, 142, 148);
 }
+
+.bouton-fixe {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 9999;
+    font-family: sans-serif;
+    display: inline-block;
+}
+
+.bouton-fixe:hover {
+    background-color: #0056b3;
+}

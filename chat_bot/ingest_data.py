@@ -5,6 +5,9 @@ from langchain_community.document_loaders import UnstructuredMarkdownLoader
 from langchain_openai import OpenAIEmbeddings
 
 import os 
+from dotenv import load_dotenv
+load_dotenv()
+
 ################################################################
 #
 # Calcul des embeddings
@@ -23,8 +26,8 @@ loader = DirectoryLoader(
 docs = loader.load()
 
 db = Qdrant.from_documents(docs, embeddings,
-                            collection_name="cv",
-                            url=os.environ["QDRANT_HOST"],)
+                           collection_name="cv",
+                           url=os.environ["QDRANT_HOST"],)
                             
 
 retriever = db.as_retriever()

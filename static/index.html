@@ -9,11 +9,10 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link href="./main.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script async src="https://umami.tgu.ovh/umami" data-website-id="a8e0bd9e-ee69-4229-9b99-9bd9622ce4ca"></script>
 </head>
 
 <body>
-  <header></header>
+  <header>
     <button id="exportButton" class="btn download_as_pdf fixed-top ">Télécharger au format PDF</button>
     <script>
         function exportHTMLtoPDF() {
@@ -25,6 +24,8 @@
 
         document.getElementById('exportButton').addEventListener('click', exportHTMLtoPDF);
     </script>
+    <a class="bouton-fixe" href="https://dynamic.tgu.ovh">Version dynamique du CV</a>
+  </header>
   <main id="content" class="container border mt-5">
     <div class="row align-items-start g-0">
       <div class="col-4 g-0">
@@ -177,6 +178,21 @@
             <div class="fs-5 fw-bold">Gouvernement de la Nouvelle Calédonie - Direction du Numérique et de la Modernisation</div>
             <div class="fs-4 fw-bold">Architecte data</div>
             <ul>
+              <li><div class="fw-bold">EN COURS :</div> Chatbot interne à destination des agents de la fonction publique de la Nouvelle Calédonie
+                <ul>
+                  <li>Chatbot intégré au système d'information existant</li>
+                  <li>Fonctionnalités :
+                    <ul>
+                      <li>Chatbot avec mémoire des conversations</li>
+                      <li>Upload et analyse de documents</li>
+                      <li>Intégration avec gmail</li>
+                      <li>Intégration avec Jira</li>
+                    </ul>
+                  </li>
+                  <li>L'objectif étant de fournir un accès à un chatbot tout en le maîtrisant</li>
+                  <li>RAG, crewai, langchain, streamlit, mcp, qdrant, mem0ai</li>
+                </ul>
+              </li>
               <li><div class="fw-bold">EN COURS :</div> Création d'une api entreprises
                 <ul>
                   <li>Centralisation de toutes les données concernant les entreprises calédoniennes</li>

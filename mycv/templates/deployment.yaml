@@ -52,3 +52,33 @@ spec:
             secretKeyRef:
               name: openai-api-key
               key: OPENAI_API_KEY
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dynamic
+  namespace: cv
+spec:
+  selector:
+    matchLabels:
+      name: dynamic
+  template:
+    metadata:
+      labels:
+        name: dynamic
+    spec:
+      containers:
+      - name: dynamic
+        image: ghcr.io/tom333/dynamic-cv:latest
+        ports:
+        - name: http
+          containerPort: 8051
+          protocol: TCP
+        env:
+        - name: QDRANT_HOST
+          value: http://cv-qdrant.cv.svc.cluster.local:6333
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: openai-api-key
+              key: OPENAI_API_KEY

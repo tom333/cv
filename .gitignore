@@ -1,2 +1,5 @@
 venv
 chat_bot/data/*
+__pycache__
+.env
+db
