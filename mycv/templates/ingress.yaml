@@ -64,7 +64,7 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: chatbot
+              name: dynamic
               port:
                 number: 8051
 
