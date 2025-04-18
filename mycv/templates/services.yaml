@@ -44,7 +44,7 @@ spec:
   selector:
     name: dynamic
   ports:
-  - port: 8051
+  - port: 8501
     name: http
-    targetPort: 8051
+    targetPort: 8501
     protocol: TCP
