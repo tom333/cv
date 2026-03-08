@@ -1,464 +1,384 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="205a19ce-485b-4056-bc3c-c0783e07ec6f"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thomas Guyader: Data architect</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link href="./main.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thomas Guyader: Data Scientist | MLOps</title>
 
-<body>
-  <header>
-    <button id="exportButton" class="btn download_as_pdf fixed-top ">Télécharger au format PDF</button>
-    <script>
-        function exportHTMLtoPDF() {
-          const {width,height} = document.body.getBoundingClientRect();
-          let htmlElement = document.getElementById('content');
-          
-          html2pdf(htmlElement, {jsPDF: {format: [width, height],unit: 'px'}}).from(htmlElement).save('CV Thomas Guyader - Architecte Data.pdf');
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --primary-color: #007bff; /* Un bleu professionnel */
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+            --text-color: #495057;
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --border-radius: 0.5rem;
         }
 
-        document.getElementById('exportButton').addEventListener('click', exportHTMLtoPDF);
-    </script>
-    <a class="bouton-fixe" href="https://dynamic.tgu.ovh">Version dynamique du CV</a>
-  </header>
-  <main id="content" class="container border mt-5">
-    <div class="row align-items-start g-0">
-      <div class="col-4 g-0">
-        <div id="profil">
-          <img src="/images/tux-v1.png" width="60%" alt="Photo de profil" class="rounded-circle mx-auto d-block" />
-        </div>
-        <div id="contact" class="px-5 mt-3">
-          <p class="fs-5 fw-bold">CONTACT</p>
-          <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone"
-              viewBox="0 0 16 16">
-              <path
-                d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z" />
-            </svg>
-            +687 83 77 43
-          </div>
-          <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope"
-              viewBox="0 0 16 16">
-              <path
-                d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
-            </svg>
-            laboitatom @ gmail.com
-          </div>
-          <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt"
-              viewBox="0 0 16 16">
-              <path
-                d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10" />
-              <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-            </svg>
-            Dumbéa - Nouvelle Calédonie
-          </div>
-        </div>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-gray);
+            color: var(--text-color);
+        }
 
-        <div id="profil" class="px-5 mt-3">
-          <p class="fs-5 fw-bold">PROFIL</p>
-          <div>
-            DATA ARCHITECT
-          </div>
-        </div>
-        <div id="langues" class="px-5 mt-3">
-          <div class="fs-5 fw-bold">LANGUES</div>
-          <div class="row">
-            <div class="col-4">Français</div>
-            <div class="col-8">
-              <div class="progress" role="progressbar" aria-label="Français" aria-valuenow="100" aria-valuemin="0"
-                aria-valuemax="100">
-                <div class="progress-bar bg-info" style="width: 100%">100%</div>
-              </div>
-            </div>
-            <div class="col-4">Anglais</div>
-            <div class="col-8">
-              <div class="progress" role="progressbar" aria-label="Français" aria-valuenow="80" aria-valuemin="0"
-                aria-valuemax="100">
-                <div class="progress-bar bg-info" style="width: 80%">80%</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="profil" class="px-5 mt-3">
-          <p class="fs-5 fw-bold">Formations</p>
-          <div>
-            <ul>
-              <li><p class="fw-bold">2022 : </p>Spécialisation Preparing for Google Cloud Certification: Cloud Data Engineer (Parcours de 6 formations)</li>
-              <li><p class="fw-bold">2022 : </p>Spécialisation Machine learning with Tensorflow on Google Cloud (Parcours de 5 formations)</li>
-              <li><p class="fw-bold">2022 : </p>Spécialisation Preparing for Google Cloud Certification: Machine Learning Engineer (Parcours de 9 formations)</li>
-              <li><p class="fw-bold">2022 : </p>Preparing for Google Cloud Certification: Cloud Architect Certificat Professionnel (Parcours de 7 formations)</li>
-              <li><p class="fw-bold">2021 : </p>Architecting with Google Kubernetes Engine (Parcours de 3 formations)</li>
-              <li><p class="fw-bold">2021 : </p>Architecting with Google Kubernetes Engine Workloads (Parcours de 5 formations)</li>
-              
-              <li><p class="fw-bold">2016 : </p>RSSI Sécurité dans les développements, architectures et administration des SI</li>
-              <li><p class="fw-bold">2016 : </p>Agile avancé</li>
-              <li><p class="fw-bold">2015 : </p>Formation management</li>
-              <li><p class="fw-bold">2015 : </p>Javascript Avancé</li>
-              <li><p class="fw-bold">2014 : </p>Certification Scrum Master</li>
-              <li><p class="fw-bold">2014 : </p>Introduction aux innovations games</li>
-              <li><p class="fw-bold">2014 : </p>Oracle fusion middleware</li>
-              <li><p class="fw-bold">2012 : </p>Java performances et optimisation</li>
-              <li><p class="fw-bold">2012 : </p>Design Patterns Java EE</li>
-              <li><p class="fw-bold">2007 : </p>IUP Ingénierie Informatique (Université de Bretagne Ouest), Master Conception et développement logiciel
-              </li>
-            </ul>
-          </div>
-        </div>
+        .cv-header {
+            background-color: white;
+            padding: 1rem 0;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 2rem;
+        }
 
-      </div>
-      <div class="col-8 p_col_droite g-0">
+        .cv-actions .btn {
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+
+        .cv-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: var(--card-shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
         
-        <div id="competences" class="px-5 mt-3">
-          <p class="fs-3 fw-bold">COMPETENCES</p>
-          <div class="row">
-            <div class="col-6">
-              <p class="fs-6 fw-bold">Data</p>
-              <ul>
-                <li>Python / Jupyter notebook</li>
-                <li>Tensorflow, Torch, Scikit learn, ...</li>
-                <li>MlFlow</li>
-                <li>MLOps</li>
-                <li>Pandas, PySpark, apache beam</li>
-              </ul>
+        .sidebar {
+            background-color: var(--dark-gray);
+            color: white;
+            padding: 2.5rem 2rem;
+        }
+        
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid var(--primary-color);
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+        }
+        
+        .sidebar h3 {
+            color: white;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.2rem;
+        }
+        
+        .profile-summary p {
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .contact-item i {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-right: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .language-item .progress {
+            height: 10px;
+            background-color: #495057;
+        }
+        .language-item .progress-bar {
+            background-color: var(--primary-color);
+        }
+
+        .main-content {
+            padding: 2.5rem;
+        }
+
+        .main-content h2 {
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin-bottom: 2rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        
+        .skills-section h4 {
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .experience-item {
+            margin-bottom: 2.5rem;
+            position: relative;
+            padding-left: 2rem;
+            border-left: 3px solid #e9ecef;
+        }
+        .experience-item:first-of-type {
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            border: 2px solid white;
+        }
+        .experience-item:first-of-type::before {
+            background-color: var(--primary-color);
+        }
+
+        .experience-date {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .experience-company {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+        }
+
+        .experience-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+        }
+
+        .experience-item ul {
+            padding-left: 20px;
+            margin-top: 1rem;
+        }
+        
+        .experience-item .project-title {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="cv-header">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap">
+            <h1 class="h4 mb-0 me-3">Thomas Guyader - Data Scientist | MLOps</h1>
+            <div class="cv-actions mt-2 mt-md-0">
+                <a href="https://dynamic.tgu.ovh/" class="btn btn-outline-primary"><i class="bi bi-box-arrow-up-right"></i> Version dynamique</a>
+                <button id="exportButton" class="btn btn-primary"><i class="bi bi-download"></i> Télécharger en PDF</button>
             </div>
-            <div class="col-6">
-              <p class="fs-6 fw-bold">Algorithmes</p>
-              <ul>
-                <li>Decision tree</li>
-                <li>Linear regression</li>
-                <li>Logistic regression</li>
-                <li>K-means</li>
-                <li>Gradient boosting</li>
-              </ul>
-            </div>
-            <div class="col-6">
-              <p class="fs-6 fw-bold">Architecture</p>
-              <ul>
-                <li>Google Cloud Plateform</li>
-                <li>Kubernetes / ArgoCD</li>
-                <li>Microservices / Application Cloud Native</li>
-                <li>CI/CD / Github actions</li>
-                <li>Terraform</li>
-              </ul>
-            </div>
-            <div class="col-6">
-              <p class="fs-6 fw-bold">Développement logiciel</p>
-              <ul>
-                <li>Django / Flask / Fastapi</li>
-                <li>Spring Boot</li>
-                <li>Angular / Vue.js</li>
-                <li>Typescript / Javascript</li>
-                <li>HTML 5 / CSS 3 / SCSS</li>
-                <li>Postgresql / Oracle DB</li>
-                <li>Git, maven, ...</li>
-              </ul>
-            </div>
-            <div class="col-6">
-              <p class="fs-6 fw-bold">Gestion de projet et management</p>
-              <ul>
-                <li>SCRUM</li>
-                <li>PMI</li>
-                <li>Management 3.0</li>
-              </ul>
-            </div>
-          </div>          
         </div>
-        <!-- FIN COMPETENCES-->
-        <div id="exp_pro" class="px-5 mt-3">
-          <p class="fs-3 fw-bold">EXPERIENCES PROFESSIONNELLES</p>
-          <div>
-            <div class="fs-5">2023 à aujourd'hui</div>
-            <div class="fs-5 fw-bold">Gouvernement de la Nouvelle Calédonie - Direction du Numérique et de la Modernisation</div>
-            <div class="fs-4 fw-bold">Architecte data</div>
-            <ul>
-              <li><div class="fw-bold">EN COURS :</div> Chatbot interne à destination des agents de la fonction publique de la Nouvelle Calédonie
-                <ul>
-                  <li>Chatbot intégré au système d'information existant</li>
-                  <li>Fonctionnalités :
-                    <ul>
-                      <li>Chatbot avec mémoire des conversations</li>
-                      <li>Upload et analyse de documents</li>
-                      <li>Intégration avec gmail</li>
-                      <li>Intégration avec Jira</li>
-                    </ul>
-                  </li>
-                  <li>L'objectif étant de fournir un accès à un chatbot tout en le maîtrisant</li>
-                  <li>RAG, crewai, langchain, streamlit, mcp, qdrant, mem0ai</li>
-                </ul>
-              </li>
-              <li><div class="fw-bold">EN COURS :</div> Création d'une api entreprises
-                <ul>
-                  <li>Centralisation de toutes les données concernant les entreprises calédoniennes</li>
-                  <li>Développement spécifique en fastapi</li>
-                  <li>Création d'un RAG pour récupérer et consolider les données des différentes sources</li>
-                  <li>Outils de traitement de données : mage.ai</li>
-                </ul>
-              </li>
-              <li><div class="fw-bold">EN COURS :</div> Déploiement d’une modern data stack on premise
-                <ul>
-                  <li>Pour certaines données “sensibles” qui ne peuvent être mises sur GCP</li>
-                  <li>Analyse de l’état de l’art</li>
-                  <li>ClickHouse, Apache SuperSet, Knative, …</li>
-                </ul>
-              </li>
-              <li ><div class="fw-bold">Création d’un "clone" de https://labonneboite.francetravail.fr/</div>
-                <ul>
-                  <li>Projet annulé avant la mise en production à cause des dernières émeutes</li>
-                  <li>Analyse de l’état de l’art</li>
-                  <li>Catboost, scikit learn</li>
-                </ul>
-              </li>
-              <li ><div class="fw-bold">Outil d’évaluation de la masse salariale de la DRHPFNC</div>
-                <ul>
-                  <li>Outil d’évaluation de la masse salariale de la DRHPFNC</li>
-                  <li>Scikit learn, gradio
-                  </li>
-                </ul>
-              </li>
-              <li ><div class="fw-bold">Chatbot pour service-public.nc</div>
-                <ul>
-                  <li>Création d’un chatbot avec le contenu du site</li>
-                  <li>RAG, Langchain, chainlit</li>
-                </ul>
-              </li>
-              <li ><div class="fw-bold">Mise en place d’une nouvelle infrastructure dédiée à la data sur google cloud plateform</div>
-                <ul>
-                  <li>Architecture réseau “Hub and Spoke”</li>
-                  <li>Secrets versionnés sur github</li>
-                  <li>Logs et monitoring centralisée</li>
-                  <li>Projets orientés data avec gestion des droits et accès</li>
-                  <li>https://github.com/gouv-nc-data/</li>
-                  <li>Terraform, github, github action</li>
-                </ul>
-              </li>
-              <li ><div class="fw-bold">Créations de modules terraform pour automatiser et faciliter le transfert de données on premise vers Google Cloud BigQuery</div>
-                <ul>
-                  <li>Cloud Run: scripts python</li>
-                  <li>Dataproc (pyspark): copie automatique de bdd vers BigQuery</li>
-                  <li>Schedule et monitoring automatique</li>
-                  <li>Terraform, github, github action</li>
-                </ul>
-              </li>
-              <li ><div class="fw-bold">Mise à disposition de données métier pour exploitation dans BigQuery, datastudio ou Spreadsheet
-              </div>
-                <ul>
-                  <li>Automatisation des copies de données</li>
-                  <li>Accompagnement au changement et montée en compétence des agents</li>
-                </ul>
-              </li>
-            </ul>
-          </div> 
-          <div>
-            <div class="fs-5">2021 - 2023</div>
-            <div class="fs-5 fw-bold">Gouvernement de la Nouvelle Calédonie - Direction du Numérique et de la Modernisation</div>
-            <div class="fs-4 fw-bold">Architecte des systèmes d’information</div>
-            <ul>
-              <li>Stratégie de migration vers kubernetes
-                Définition d’une stratégie de migration des nouvelles applications et des anciennes sur une nouvelle infrastructure basée sur kubernetes 
+    </header>
 
-                <ul>
-                  <li>Accompagnement au changement</li>
-                  <li>DevSecOps</li>
-                  <li>Infrastructure as code</li>
-                  <li>Application Cloud Nativ</li>
-                </ul>
-              </li>
-              <li>Stratégie de migration sur le cloud
-                Définition d’une stratégie d'hébergement d’applications métier sur Google Cloud Plateform
-              </li>
-            </ul>
-          </div>
+    <main class="container">
+        <div id="cv-content" class="cv-container">
+            <div class="row g-0">
+                <div class="col-lg-4">
+                    <div class="sidebar">
+                        <div class="text-center">
+                            <img src="https://i.imgur.com/gEKs5M9.png" alt="Photo de profil" class="profile-img">
+                        </div>
+                        
+                        <div class="profile-summary">
+                            <h3>PROFIL</h3>
+                            <p>
+                                Data Scientist senior avec 15+ ans d'expérience en ingénierie et architecture data. Spécialisé dans la conception et le déploiement de solutions de Machine Learning de bout en bout, de l'analyse à la mise en production sur des infrastructures cloud et auto-hébergées.
+                            </p>
+                        </div>
 
-          <div>
-            <div class="fs-5">2018</div>
-            <div class="fs-5 fw-bold">Gouvernement de la Nouvelle Calédonie - Direction des Technologies des Système d’Informations</div>
-            <div class="fs-4 fw-bold">Chef de projet NC Connect</div>
-            https://connect.gouv.nc
-            <div>Plateforme unique d’authentification du Gouvernement de la Nouvelle Calédonie
-              Gestion du projet selon PMI
-              </div>
-              <div class="fs-5 fw-bold">Technologies</div>
-              <div>OpenId Connect, Spring boot, Angular, Postgresql, Haute disponibilité, Déploiement continue
-              </div>
-          </div>
-          
+                        <div id="contact">
+                            <h3>CONTACT</h3>
+                            <div class="contact-item">
+                                <i class="bi bi-telephone-fill"></i>
+                                <span>+687 83 77 43</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-envelope-fill"></i>
+                                <span>laboitatom @ gmail.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-geo-alt-fill"></i>
+                                <span>Dumbéa - Nouvelle Calédonie</span>
+                            </div>
+                        </div>
 
-          <div>
-            <div class="fs-5">2013 - 2016</div>
-            <div class="fs-5 fw-bold">Gouvernement de la Nouvelle Calédonie - Direction des Technologies des Système d’Informations</div>
-            <div class="fs-4 fw-bold">Architecte logiciel</div>
-            <div>Mise en oeuvre d’architectures logiciels sur les différents projets et téléservices du gouvernement en fonction des besoins et de l’existant</div>
-              <div class="fs-5 fw-bold">Technologies</div>
-              <div>WOA, Microservices, CQRS / ES, Redux, PWA, Applications mobiles hybrides</div>
-          </div>
+                        <div id="languages">
+                            <h3>LANGUES</h3>
+                            <div class="language-item mb-2">
+                                <span>Français (Natif)</span>
+                                <div class="progress" role="progressbar" aria-valuenow="100">
+                                    <div class="progress-bar" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="language-item">
+                                <span>Anglais (Professionnel)</span>
+                                <div class="progress" role="progressbar" aria-valuenow="80">
+                                    <div class="progress-bar" style="width: 80%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-          <div>
-            <div class="fs-5">2013 - 2016</div>
-            <div class="fs-5 fw-bold">Gouvernement de la Nouvelle Calédonie - Direction des Technologies des Système d’Informations</div>
-            <div class="fs-4 fw-bold">Architecte logiciel</div>
-            <div>Mise en place d’un nouveau framework de développement
-              Remplacement d’un socle payant (oracle) par de l’open source
-              <ul>
-                <li>Frontend Angular
-                  <ul>
-                    <li>angular</li>
-                    <li>NgRx</li>
-                    <li>Typescript</li>
-                    <li>Saas</li>
-                    <li>Progressive Webapp</li>
-                  </ul>
-                </li>
-                <li>Backend Spring boot</li>
-                <li>Java LTS</li>
-                <li>Base postgresql, flyway</li>
-                <li>Architecture orientée microservices</li>
-                <li>Outils spring cloud, serveurs de configuration (spring cloud config), annuaire de services (spring cloud netflix eureka), Circuit breaker (Spring cloud netflix hystrix), Spring boot admin</li>
-                <li>Chaîne d’intégration continue et déploiement continu
-                  <ul>
-                    <li>Jenkins / pipeline</li>
-                    <li>Gitlab</li>
-                    <li>Git flow</li>
-                    <li>Sonarqube</li>
-                    <li>Artifactory</li>
-                  </ul>
-                </li>
-                <li>Tests unitaires, tests d’intégrations, tests de bout en bout, tests de montée en charge</li>
-                <li>Gestion du changement (accompagnement, formation, ateliers, …)</li>
-                <li>Mise en oeuvre participative (Atelier de co création, serious games, …)</li>
-                <li>Ouverture d’une partie du code source sur github</li>
-                <li>POC docker</li>
-                <li>Authentification centralisée basée sur OpenId Connect</li>
-                <li>Intégration avec le SI existant : GED alfresco et SAE docubase (CMIS), jira, SIG</li>
-                <li>Support aux développeurs et chefs de projets</li>
-              </ul>
-          </div>
+                <div class="col-lg-8">
+                    <div class="main-content">
+                        <section id="skills" class="skills-section">
+                            <h2>COMPETENCES</h2>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4>Machine Learning & IA Générative</h4>
+                                    <ul>
+                                        <li>Modélisation : Scikit-learn, Catboost, Tensorflow</li>
+                                        <li>Frameworks IA : LangChain, CrewAI, LangGraph</li>
+                                        <li>Architecture : RAG, Agents Autonomes</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>MLOps & Data Engineering</h4>
+                                    <ul>
+                                        <li>Orchestration : ZenML, MLflow, Mage.ai</li>
+                                        <li>Data processing : Pandas, PySpark, GeoPandas</li>
+                                        <li>Bases de données : Qdrant, DuckDB, ClickHouse</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>Infrastructure & Cloud</h4>
+                                    <ul>
+                                        <li>Cloud : Google Cloud Platform (GCP)</li>
+                                        <li>Conteneurisation : Docker, Kubernetes</li>
+                                        <li>IaC & GitOps : Terraform, ArgoCD</li>
+                                        <li>CI/CD : GitHub Actions</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4>Développement & Visualisation</h4>
+                                    <ul>
+                                        <li>Backend : Python (FastAPI, Flask)</li>
+                                        <li>Frontend & Data Apps : Streamlit, Chainlit, Gradio</li>
+                                        <li>BI : Apache Superset</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                        
+                        <hr class="my-5">
 
-          <div>
-            <div class="fs-5">2017</div>
-            <div class="fs-5 fw-bold">Gouvernement de la Nouvelle Calédonie - Direction des Technologies des Système d’Informations</div>
-            <div class="fs-4 fw-bold">Architecte logiciel</div>
-            <div>Modernisation du socle de développement ADF 11 et 10</div>
-              <div class="fs-5 fw-bold">Technologies</div>
-              <div>Oracle ADF 12 essentials, 
-                Java 11, 
-                Tomcat embarqué, 
-                POC de migration de Oracle DB vers Postgresql
-              </div>
-          </div>
+                        <section id="experience">
+                            <h2>EXPERIENCES PROFESSIONNELLES</h2>
+                            <div class="experience-item">
+                                <div class="experience-date">2023 à aujourd'hui</div>
+                                <div class="experience-company">Gouvernement de la Nouvelle Calédonie - Direction du Numérique</div>
+                                <div class="experience-title">Architecte data / Data Scientist</div>
+                                <ul>
+                                    <li><div class="project-title">Chatbot interne avec IA Générative (RAG)</div> pour les agents de la fonction publique (crewai, langchain, qdrant).</li>
+                                    <li><div class="project-title">Création d'une API centralisée des entreprises calédoniennes</div> avec des outils de traitement de données modernes (mage.ai, fastapi).</li>
+                                    <li><div class="project-title">Modèle de prédiction de potentiel d'embauche</div> (similaire à "La Bonne Boîte") avec Catboost et scikit-learn.</li>
+                                    <li>Mise en place d'une infrastructure data sur GCP et création de modules Terraform pour l'automatisation des flux de données vers BigQuery.</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="experience-item">
+                                <div class="experience-date">2021 - 2023</div>
+                                <div class="experience-company">Gouvernement de la Nouvelle Calédonie - Direction du Numérique</div>
+                                <div class="experience-title">Architecte des systèmes d’information</div>
+                                <ul>
+                                    <li>Définition de la stratégie de migration vers Kubernetes (DevSecOps, IaC, Cloud Native).</li>
+                                    <li>Élaboration de la stratégie d'hébergement d’applications métier sur Google Cloud Platform.</li>
+                                </ul>
+                            </div>
 
-          <div>
-            <div class="fs-5">2013 - 2017</div>
-            <div class="fs-5 fw-bold">Gouvernement de la Nouvelle Calédonie - Direction des Technologies des Système d’Informations</div>
-            <div class="fs-4 fw-bold">Manager de proximité</div>
-            <div>Chef de section AXI (Architecture de cadre commun d'interopérabilité)</div>
-              <div class="fs-5 fw-bold">Technologies</div>
-              <div>
-                <ul>
-                  <li>Management d’une équipe de 5 personnes</li>
-                  <li>activité de support</li>
-                  <li>formation</li>
-                  <li>organisation et animation de présentations techniques et de veille technologique hebdomadaires
-                  </li>
-                </ul>
-              </div>
-          </div>
+                            <div class="experience-item">
+                                <div class="experience-date">2013 - 2018</div>
+                                <div class="experience-company">Gouvernement de la Nouvelle Calédonie - DTSI</div>
+                                <div class="experience-title">Architecte Logiciel & Chef de Projet</div>
+                                <ul>
+                                     <li>
+                                        <div class="project-title">Direction du projet "NC Connect" (type France Connect)</div>
+                                        <p class="mb-1 ps-3">Pilotage et architecture de la plateforme d'authentification unifiée pour les services publics de Nouvelle-Calédonie, socle technique indispensable à la mise en œuvre du programme "Dites-le-nous une fois".</p>
+                                    </li>
+                                    <li>Remplacement d'un socle technique Oracle par une architecture microservices open-source (Spring Boot, Angular).</li>
+                                </ul>
+                            </div>
+                        </section>
 
+                        <hr class="my-5">
 
-          <div>
-            <div class="fs-5">2013 - 2017</div>
-            <div class="fs-5 fw-bold">Gouvernement de la Nouvelle Calédonie - Direction des Technologies des Système d’Informations</div>
-            <div class="fs-4 fw-bold">Concepteur développeur</div>
-            <div>Application mobile de résultats en temps réel des élections provinciales pour ipad
-              https://samobile.gouv.nc
-              </div>
-              <div class="fs-5 fw-bold">Technologies</div>
-              <div>
-                <ul>
-                  <li>python / django
-                  </li>
-                  <li>angularjs</li>
-                  <li>websocket</li>
-                  </li>
-                </ul>
-              </div>
-          </div>
+                        <section id="personal-projects">
+                            <h2>PROJETS PERSONNELS SIGNIFICATIFS</h2>
 
+                            <div class="experience-item" style="border-left: 3px solid var(--primary-color);">
+                                <div class="experience-date">Projet Data / MLOps Open Source</div>
+                                <div class="experience-title">Accidents NC : Prédiction d'Accidents Routiers</div>
+                                <ul class="mt-2">
+                                    <li><p class="mb-2"><em>Conception et industrialisation d'un système de prédiction géospatial-temporel des accidents routiers en Nouvelle-Calédonie.</em></p></li>
+                                    <li><p class="mb-1"><strong>Architecture & Data Engineering :</strong> Conception d'une architecture Medallion (Bronze/Silver/Gold) avec DuckDB. Développement de pipelines fusionnant 5 ans d'historique (data.gouv.fr) et des données OpenStreetMap.</p></li>
+                                    <li><p class="mb-1"><strong>Orchestration & MLOps :</strong> Déploiement des pipelines avec Dagster sur Kubernetes. Tracking d'expériences et gestion du cycle de vie des modèles via MLflow.</p></li>
+                                    <li><p class="mb-1"><strong>Déploiement & Serving :</strong> Mise en production de modèles d'Ensemble Blending (CatBoost/XGBoost/MLP) via une API temps réel (FastAPI), interfacée avec un dashboard interactif Streamlit.</p></li>
+                                    <li><p class="mb-1"><strong>DevOps & Qualité :</strong> GitOps avec CI/CD (GitHub Actions) pour les tests (couverture > 90%) et le build de conteneurs. Stack unifiée : Python (uv), Kubernetes, Docker, Tilt.</p></li>
+                                    <li>
+                                        <p class="mb-1 mt-2">
+                                            <strong>Liens :</strong> 
+                                            <a href="https://meteo-des-accidents.tgu.ovh/" target="_blank" rel="noopener noreferrer"><i class="bi bi-box-arrow-up-right"></i> Application Live (Streamlit)</a> | 
+                                            <a href="https://github.com/tom333/accidents-nc" target="_blank" rel="noopener noreferrer"><i class="bi bi-github"></i> Code Source (GitHub)</a>
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="experience-item">
+                                <div class="experience-date">Démonstrateur IA (accessible via le header)</div>
+                                <div class="experience-title">CV Dynamique Adaptatif</div>
+                                <ul class="mt-2">
+                                    <li>
+                                        <p class="mb-1">Création d'un système d'agents IA (CrewAI) via une interface Streamlit qui analyse une offre d'emploi et réécrit ce CV pour mettre en évidence les compétences et expériences les plus pertinentes. Il s'agit de la "Version dynamique" de ce CV.</p>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="experience-item">
+                                <div class="experience-date">Démonstrateur IA (intégrée à cette page)</div>
+                                <div class="experience-title">Chatbot RAG sur mon parcours</div>
+                                <ul class="mt-2">
+                                    <li>
+                                        <p class="mb-1">Développement du chatbot présent sur cette page. Il permet de poser des questions en langage naturel sur mon parcours en se basant sur une version détaillée de mon CV. Il utilise une architecture RAG avec Qdrant comme base de données vectorielle et un graphe d'états (LangGraph) pour un comportement agentique robuste.</p>
+                                    </li>
+                                </ul>
+                            </div>
+                             
+                            <div class="experience-item">
+                                <div class="experience-date">Projet personnel (maintenance continue)</div>
+                                <div class="experience-title">Cluster Kubernetes auto-hébergé en 100% GitOps</div>
+                                <ul class="mt-2">
+                                    <li>
+                                        <p class="mb-1">Mise en place et maintenance d'un cluster Kubernetes (MicroK8s) dont l'état est entièrement défini par un dépôt Git. L'approche "App of Apps" avec ArgoCD et des charts Helm "maison" permet une gestion hiérarchique et un déploiement automatisé de l'ensemble des services.</p>
+                                        <p class="mb-1 mt-2">
+                                            <strong>Sources :</strong> 
+                                            <a href="https://github.com/tom333/my-kluster" target="_blank" rel="noopener noreferrer">Cluster (my-kluster)</a> | 
+                                            <a href="https://github.com/tom333/my-charts" target="_blank" rel="noopener noreferrer">Charts Helm (my-charts)</a>
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </section>
 
-          <div>
-            <div class="fs-5">2008 - 2013</div>
-            <div class="fs-5 fw-bold">Gouvernement de la Nouvelle Calédonie - Direction des Technologies des Système d’Informations</div>
-            <div class="fs-4 fw-bold">Concepteur Développeur Oracle ADF / Architecte logiciel
-            </div>
-            <div>
-              </div>
-              <div class="fs-5 fw-bold">Technologies</div>
-              <div>
-                <ul>
-                  <li>ADF 10 et 11</li>
-                  <li>Java 5 et 6</li>
-                  <li>Oracle DB</li>
-                  <li>JasperReport</li>
-                  <li>Maven</li>
-                </ul>
-              </div>
-          </div>
-
-
-          <div>
-            <div class="fs-5">2007 - 2008</div>
-            <div class="fs-5 fw-bold">IdSoft</div>
-            <div class="fs-4 fw-bold">Concepteur Développeur</div>
-            <div>
-              </div>
-              <div class="fs-5 fw-bold">Technologies</div>
-              <div>
-                Java, J2e, Access, iText, Python, Django, ReportLab, Oracle10g, JSF, Spring, Hibernate, IceFaces, Jasper report.
-
-              </div>
-          </div>
-
-
-          <div>
-            <div class="fs-5">2005 - 2006</div>
-            <div class="fs-5 fw-bold">Stages en entreprises</div>
-            <div>Développement d’un logiciel de suivi de service après vente</div>
-          <div>Simulation d’agents collaboratifs émotionnels</div>
-          <div>Conception et développement d’un méta-modèle multi-agents d’une colonne d’eau</div>
-          <div>Développement d’un portail web de consultation de données océanographiques pour 	l’IRD de Nouméa (Modélisation et conception de la base de données PostgreSQL, Reprise des données Oracle vers PostgreSQL, développement du portail).</div>
-          <div class="fs-5 fw-bold">Technologies</div>
-          <div>
-            Delphi, Access, C++, OpenGL, Java/J2EE, Oracle, PostgreSQL, JSF, Spring, Hibernate
-
-          </div>
-        </div>
-
-        </div>
-      </div>
-  </main>
-  <footer></footer>
-  <script src="https://chatbot.tgu.ovh/copilot/index.js"></script>
-  <script>
-          window.addEventListener("chainlit-call-fn", (e) => {
-              const { name, args, callback } = e.detail;
-              callback("You sent: " + args.msg);
-          });
-      </script>
-    <script>
-      window.mountChainlitWidget({
-        chainlitServer: "https://chatbot.tgu.ovh/",
-      });
-    </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-</body>
-
-</html>
+                    </div>
+                </div>
