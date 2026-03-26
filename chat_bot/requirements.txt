@@ -6,3 +6,4 @@ unstructured[md]
 openai
 tiktoken
 langgraph
+langchain
