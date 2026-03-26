@@ -115,7 +115,7 @@ config = {}
 async def init():
     cl.user_session.set("rag_chain", app)
     msg = cl.Message(
-        content="Bonjour. \n Je suis le représentant virtuel de Thomas Guyader, Data Architect. \n Comment puis je vous convaincre de l'embaucher ?"
+        content="Bonjour. \n Je suis le représentant virtuel de Thomas Guyader, Machine Learning Engineer / MLOps Architect. \n Comment puis je vous convaincre de l'embaucher ?"
     )
     await msg.send()
 
