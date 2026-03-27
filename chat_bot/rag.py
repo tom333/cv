@@ -1,20 +1,14 @@
 import os
-from typing import Sequence
 
 import chainlit as cl
-from langchain.chains import create_history_aware_retriever, create_retrieval_chain
-from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.prompts.chat import MessagesPlaceholder
+from langchain_core.messages import AIMessage
+from langchain_core.tools import tool
 from langchain_core.runnables import RunnableConfig
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_qdrant import QdrantVectorStore
+from langgraph.prebuilt import create_react_agent
 from langgraph.checkpoint.memory import MemorySaver
-from langgraph.graph import START, StateGraph
-from langgraph.graph.message import add_messages
 from qdrant_client import QdrantClient
-from typing_extensions import Annotated, TypedDict
 
 embeddings = OpenAIEmbeddings()
 client = QdrantClient(
@@ -33,73 +27,33 @@ retriever = vectorstore.as_retriever()
 llm = ChatOpenAI(temperature=0, model="gpt-4o-mini", streaming=True)
 
 
-### Contextualize question ###
-contextualize_q_system_prompt = (
-    "Given a chat history and the latest user question "
-    "which might reference context in the chat history, "
-    "formulate a standalone question which can be understood "
-    "without the chat history. Do NOT answer the question, "
-    "just reformulate it if needed and otherwise return it as is."
-)
-contextualize_q_prompt = ChatPromptTemplate.from_messages(
-    [
-        ("system", contextualize_q_system_prompt),
-        MessagesPlaceholder("chat_history"),
-        ("human", "{input}"),
-    ]
-)
-history_aware_retriever = create_history_aware_retriever(
-    llm, retriever, contextualize_q_prompt
-)
+@tool
+def search_cv(query: str) -> str:
+    """Recherche des informations dans le CV de Thomas Guyader."""
+    docs = retriever.invoke(query)
+    if not docs:
+        return "Aucune information pertinente trouvée dans le CV."
+
+    snippets = []
+    for i, doc in enumerate(docs, start=1):
+        snippets.append(f"Extrait {i}:\n{doc.page_content}")
+    return "\n\n".join(snippets)
 
 
 system_prompt = (
-    "Tu es le représentant de Thomas Guyader dont tu connais le curriculum vitae. "
-    "Ton objectif est de le faire recruter par ceux qui te questionnent"
-    "Si tu ne connais pas la réponse, dis simplement que tu n'as pas été formé sur ce sujet"
-    "\n\n"
-    "{context}"
+    "Tu es le représentant de Thomas Guyader et tu connais son curriculum vitae. "
+    "Ton objectif est de le faire recruter par ceux qui te questionnent. "
+    "Utilise l'outil search_cv pour récupérer des informations factuelles du CV avant de répondre. "
+    "Si l'information n'est pas disponible, dis simplement que tu n'as pas été formé sur ce sujet."
 )
-
-prompt = ChatPromptTemplate.from_messages(
-    [
-        ("system", system_prompt),
-        MessagesPlaceholder("chat_history"),
-        ("human", "{input}"),
-    ]
-)
-
-question_answer_chain = create_stuff_documents_chain(llm, prompt)
-rag_chain = create_retrieval_chain(history_aware_retriever, question_answer_chain)
-
-### Statefully manage chat history ###
-
-
-class State(TypedDict):
-    input: str
-    chat_history: Annotated[Sequence[BaseMessage], add_messages]
-    context: str
-    answer: str
-
-
-def call_model(state: State):
-    response = rag_chain.invoke(state)
-    return {
-        "chat_history": [
-            HumanMessage(state["input"]),
-            AIMessage(response["answer"]),
-        ],
-        "context": response["context"],
-        "answer": response["answer"],
-    }
-
-
-workflow = StateGraph(state_schema=State)
-workflow.add_edge(START, "model")
-workflow.add_node("model", call_model)
 
 memory = MemorySaver()
-app = workflow.compile(checkpointer=memory)
+app = create_react_agent(
+    model=llm,
+    tools=[search_cv],
+    prompt=system_prompt,
+    checkpointer=memory,
+)
 
 
 config = {}
@@ -113,7 +67,7 @@ config = {}
 
 @cl.on_chat_start
 async def init():
-    cl.user_session.set("rag_chain", app)
+    cl.user_session.set("agent", app)
     msg = cl.Message(
         content="Bonjour. \n Je suis le représentant virtuel de Thomas Guyader, Machine Learning Engineer / MLOps Architect. \n Comment puis je vous convaincre de l'embaucher ?"
     )
@@ -122,11 +76,15 @@ async def init():
 
 @cl.on_message
 async def on_message(message: cl.Message):
-    rag_chain = cl.user_session.get("rag_chain")
+    agent = cl.user_session.get("agent")
+    if agent is None:
+        await cl.Message(content="Erreur interne: agent non initialise.").send()
+        return
+
     print("########### message ##############²²")
     print(message)
-    res = rag_chain.invoke(
-        {"input": message.content},
+    res = await agent.ainvoke(
+        {"messages": [("user", message.content)]},
         config=RunnableConfig(
             callbacks=[
                 cl.LangchainCallbackHandler(
@@ -145,6 +103,16 @@ async def on_message(message: cl.Message):
             configurable={"thread_id": "abc123"},
         ),
     )
-    print("#######reponse ##########")
-    print(res["chat_history"])
-    await cl.Message(content=res["answer"]).send()
+    final_answer = "Je n'ai pas de reponse pour le moment."
+    for msg in reversed(res.get("messages", [])):
+        if isinstance(msg, AIMessage) and msg.content:
+            if isinstance(msg.content, str):
+                final_answer = msg.content
+            else:
+                final_answer = "\n".join(
+                    part if isinstance(part, str) else str(part)
+                    for part in msg.content
+                )
+            break
+
+    await cl.Message(content=final_answer).send()
