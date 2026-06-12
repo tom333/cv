@@ -6,7 +6,7 @@ WORKDIR /app
 COPY requirements.txt ./
 RUN pip install -U -r requirements.txt
 
-COPY rag.py ./
+COPY rag.py embeddings.py ./
 
 COPY chainlit.md ./
 

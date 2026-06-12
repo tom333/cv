@@ -1,30 +1,25 @@
 import os
 
 import chainlit as cl
-from langchain_core.messages import AIMessage
+from langchain.agents import create_agent
+from langchain_core.messages import AIMessageChunk
 from langchain_core.tools import tool
-from langchain_core.runnables import RunnableConfig
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_openai import ChatOpenAI
 from langchain_qdrant import QdrantVectorStore
-from langgraph.prebuilt import create_react_agent
 from langgraph.checkpoint.memory import MemorySaver
 from qdrant_client import QdrantClient
 
-embeddings = OpenAIEmbeddings()
-client = QdrantClient(
-    url=os.environ["QDRANT_HOST"],
-)
-vectorstore = QdrantVectorStore(client, "cv", embeddings)  #
+from embeddings import COLLECTION_NAME, get_embeddings
 
-retriever = vectorstore.as_retriever()
 ################################################################
 #
-# Création de la chain
+# Retrieval
 #
 ################################################################
 
-
-llm = ChatOpenAI(temperature=0, model="gpt-4o-mini", streaming=True)
+client = QdrantClient(url=os.environ["QDRANT_HOST"])
+vectorstore = QdrantVectorStore(client, COLLECTION_NAME, get_embeddings())
+retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
 
 
 @tool
@@ -36,27 +31,45 @@ def search_cv(query: str) -> str:
 
     snippets = []
     for i, doc in enumerate(docs, start=1):
-        snippets.append(f"Extrait {i}:\n{doc.page_content}")
+        section = " > ".join(
+            doc.metadata[k] for k in ("h1", "h2", "h3") if doc.metadata.get(k)
+        )
+        header = f"Extrait {i} (section : {section})" if section else f"Extrait {i}"
+        snippets.append(f"{header}\n{doc.page_content}")
     return "\n\n".join(snippets)
 
+
+################################################################
+#
+# Agent
+#
+################################################################
+
+# LLM servi par l'instance LocalAI du cluster ; deepseek-v4-flash y est un
+# backend cloud-proxy vers OpenRouter (la clé OpenRouter reste côté LocalAI).
+llm = ChatOpenAI(
+    model=os.environ.get("MODEL_NAME", "deepseek-v4-flash"),
+    base_url=os.environ["LOCALAI_BASE_URL"],
+    api_key=os.environ["LOCALAI_API_KEY"],
+    temperature=0,
+    streaming=True,
+)
 
 system_prompt = (
     "Tu es le représentant de Thomas Guyader et tu connais son curriculum vitae. "
     "Ton objectif est de le faire recruter par ceux qui te questionnent. "
     "Utilise l'outil search_cv pour récupérer des informations factuelles du CV avant de répondre. "
+    "Mentionne la section du CV d'où provient l'information quand c'est pertinent. "
     "Si l'information n'est pas disponible, dis simplement que tu n'as pas été formé sur ce sujet."
 )
 
-memory = MemorySaver()
-app = create_react_agent(
+agent = create_agent(
     model=llm,
     tools=[search_cv],
-    prompt=system_prompt,
-    checkpointer=memory,
+    system_prompt=system_prompt,
+    checkpointer=MemorySaver(),
 )
 
-
-config = {}
 
 ################################################################
 #
@@ -67,52 +80,37 @@ config = {}
 
 @cl.on_chat_start
 async def init():
-    cl.user_session.set("agent", app)
-    msg = cl.Message(
-        content="Bonjour. \n Je suis le représentant virtuel de Thomas Guyader, Machine Learning Engineer / MLOps Architect. \n Comment puis je vous convaincre de l'embaucher ?"
-    )
-    await msg.send()
+    await cl.Message(
+        content="Bonjour. \n Je suis le représentant virtuel de Thomas Guyader, "
+        "Machine Learning Engineer / MLOps Architect. \n "
+        "Comment puis je vous convaincre de l'embaucher ?"
+    ).send()
 
 
 @cl.on_message
 async def on_message(message: cl.Message):
-    agent = cl.user_session.get("agent")
-    if agent is None:
-        await cl.Message(content="Erreur interne: agent non initialise.").send()
+    answer = cl.Message(content="")
+    try:
+        async for msg, _metadata in agent.astream(
+            {"messages": [("user", message.content)]},
+            # Un thread par session Chainlit : chaque visiteur a sa propre
+            # mémoire de conversation.
+            {"configurable": {"thread_id": cl.context.session.id}},
+            stream_mode="messages",
+        ):
+            if (
+                isinstance(msg, AIMessageChunk)
+                and isinstance(msg.content, str)
+                and msg.content
+            ):
+                await answer.stream_token(msg.content)
+    except Exception as exc:
+        cl.logger.exception("Erreur agent : %s", exc)
+        await cl.Message(
+            content="Une erreur interne est survenue, merci de réessayer."
+        ).send()
         return
 
-    print("########### message ##############²²")
-    print(message)
-    res = await agent.ainvoke(
-        {"messages": [("user", message.content)]},
-        config=RunnableConfig(
-            callbacks=[
-                cl.LangchainCallbackHandler(
-                    to_ignore=[
-                        "ChannelRead",
-                        "RunnableLambda",
-                        "ChannelWrite",
-                        "__start__",
-                        "_execute",
-                        "call_model",
-                    ]
-                    # can add more into the to_ignore: "agent:edges", "call_model"
-                    # to_keep=
-                )
-            ],
-            configurable={"thread_id": "abc123"},
-        ),
-    )
-    final_answer = "Je n'ai pas de reponse pour le moment."
-    for msg in reversed(res.get("messages", [])):
-        if isinstance(msg, AIMessage) and msg.content:
-            if isinstance(msg.content, str):
-                final_answer = msg.content
-            else:
-                final_answer = "\n".join(
-                    part if isinstance(part, str) else str(part)
-                    for part in msg.content
-                )
-            break
-
-    await cl.Message(content=final_answer).send()
+    if not answer.content:
+        answer.content = "Je n'ai pas de réponse pour le moment."
+    await answer.send()

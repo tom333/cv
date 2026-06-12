@@ -1,9 +1,8 @@
-langchain-community
-langchain-openai
-chainlit
-langchain_qdrant
-unstructured[md]
-openai
-tiktoken
-langgraph
-langchain
+chainlit==2.11.1
+langchain==1.3.7
+langchain-openai==1.3.0
+langchain-qdrant==1.1.0
+langchain-text-splitters==1.1.2
+langgraph==1.2.4
+python-dotenv==1.2.2
+qdrant-client==1.18.0
