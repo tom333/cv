@@ -10,7 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script defer src="https://cloud.umami.is/script.js" data-website-id="205a19ce-485b-4056-bc3c-c0783e07ec6f"></script>
     <style>
         :root {
@@ -176,6 +175,93 @@
         .experience-item .project-title {
             font-weight: bold;
         }
+
+        /* ===== Export PDF via impression navigateur ===== */
+        @media print {
+            @page {
+                size: A4;
+                margin: 12mm;
+            }
+
+            /* Masquer l'interface : header d'actions, widget chatbot */
+            .cv-header,
+            #chainlit-copilot,
+            chainlit-copilot {
+                display: none !important;
+            }
+
+            body {
+                background-color: white;
+                font-size: 11px;
+            }
+
+            main.container {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .cv-container {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: 100%;
+            }
+
+            /* Forcer les colonnes côte à côte (les col-lg-* s'empilent sinon) */
+            .row.g-0 {
+                display: flex;
+            }
+            .col-lg-4 {
+                width: 33%;
+                flex: 0 0 33%;
+            }
+            .col-lg-8 {
+                width: 67%;
+                flex: 0 0 67%;
+            }
+
+            /* Sidebar : fond clair — les navigateurs n'impriment pas les fonds
+               par défaut, le texte blanc deviendrait invisible */
+            .sidebar {
+                background-color: white;
+                color: var(--text-color);
+                padding: 1.5rem 1rem;
+                border-right: 2px solid var(--primary-color);
+            }
+            .sidebar h3 {
+                color: var(--dark-gray);
+            }
+
+            .main-content {
+                padding: 1.5rem;
+            }
+
+            /* Barres de langues : forcer l'encre des fonds */
+            .language-item .progress {
+                background-color: #e9ecef;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            .language-item .progress-bar {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            /* Pagination : ne pas couper une expérience, garder les titres
+               avec leur contenu */
+            .experience-item {
+                break-inside: avoid;
+            }
+            .main-content h2,
+            .skills-section h4 {
+                break-after: avoid;
+                break-inside: avoid;
+            }
+
+            a {
+                color: var(--primary-color);
+                text-decoration: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -184,7 +270,7 @@
         <div class="container d-flex justify-content-between align-items-center flex-wrap">
             <h1 class="h4 mb-0 me-3">Thomas Guyader - Data Scientist | MLOps</h1>
             <div class="cv-actions mt-2 mt-md-0">
-                <a href="https://dynamic.tgu.ovh/" class="btn btn-outline-primary"><i class="bi bi-box-arrow-up-right"></i> Version dynamique</a>
+                <!--a href="https://dynamic.tgu.ovh/" class="btn btn-outline-primary"><i class="bi bi-box-arrow-up-right"></i> Version dynamique</a-->
                 <button id="exportButton" class="btn btn-primary"><i class="bi bi-download"></i> Télécharger en PDF</button>
             </div>
         </div>
@@ -196,7 +282,7 @@
                 <div class="col-lg-4">
                     <div class="sidebar">
                         <div class="text-center">
-                            <img src="https://i.imgur.com/gEKs5M9.png" alt="Photo de profil" class="profile-img">
+                            <img src="images/tux-v1.png" alt="Photo de profil" class="profile-img">
                         </div>
                         
                         <div class="profile-summary">
@@ -433,14 +519,15 @@
     </main>
 
     <script>
-        function exportHTMLtoPDF() {
-            const element = document.getElementById('cv-content');
-            const { width, height } = element.getBoundingClientRect();
-            html2pdf(element, { jsPDF: { format: [width, height], unit: 'px' } })
-                .from(element)
-                .save('CV Thomas Guyader - Architecte Data.pdf');
-        }
-        document.getElementById('exportButton').addEventListener('click', exportHTMLtoPDF);
+        // Export PDF via le dialogue d'impression : texte vectoriel,
+        // liens cliquables, pagination A4 (cf. @media print).
+        // Le titre du document devient le nom de fichier proposé.
+        document.getElementById('exportButton').addEventListener('click', () => {
+            const originalTitle = document.title;
+            document.title = 'CV Thomas Guyader - Architecte Data';
+            window.print();
+            document.title = originalTitle;
+        });
     </script>
 
     <script src="https://chatbot.tgu.ovh/copilot/index.js"></script>
