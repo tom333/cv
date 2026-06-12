@@ -47,12 +47,14 @@ spec:
         env:
         - name: QDRANT_HOST
           value: http://cv-qdrant.cv.svc.cluster.local:6333
-        - name: LOCALAI_BASE_URL
-          value: http://localai.localai.svc.cluster.local:8080/v1
-        - name: LOCALAI_API_KEY
+        - name: MODEL_NAME
+          value: deepseek/deepseek-v4-flash
+        - name: LLM_BASE_URL
+          value: https://openrouter.ai/api/v1
+        - name: LLM_API_KEY
           valueFrom:
             secretKeyRef:
-              name: localai-api-key
+              name: openrouter-api-key
               key: api-key
         - name: OPENROUTER_API_KEY
           valueFrom:

@@ -45,12 +45,12 @@ def search_cv(query: str) -> str:
 #
 ################################################################
 
-# LLM servi par l'instance LocalAI du cluster ; deepseek-v4-flash y est un
-# backend cloud-proxy vers OpenRouter (la clé OpenRouter reste côté LocalAI).
+# Endpoint OpenAI-compatible (OpenRouter aujourd'hui ; LocalAI ou autre
+# gateway demain : seul l'env change).
 llm = ChatOpenAI(
-    model=os.environ.get("MODEL_NAME", "deepseek-v4-flash"),
-    base_url=os.environ["LOCALAI_BASE_URL"],
-    api_key=os.environ["LOCALAI_API_KEY"],
+    model=os.environ.get("MODEL_NAME", "deepseek/deepseek-v4-flash"),
+    base_url=os.environ["LLM_BASE_URL"],
+    api_key=os.environ["LLM_API_KEY"],
     temperature=0,
     streaming=True,
 )
