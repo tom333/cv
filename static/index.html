@@ -428,3 +428,26 @@
 
                     </div>
                 </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function exportHTMLtoPDF() {
+            const element = document.getElementById('cv-content');
+            const { width, height } = element.getBoundingClientRect();
+            html2pdf(element, { jsPDF: { format: [width, height], unit: 'px' } })
+                .from(element)
+                .save('CV Thomas Guyader - Architecte Data.pdf');
+        }
+        document.getElementById('exportButton').addEventListener('click', exportHTMLtoPDF);
+    </script>
+
+    <script src="https://chatbot.tgu.ovh/copilot/index.js"></script>
+    <script>
+        window.mountChainlitWidget({
+            chainlitServer: "https://chatbot.tgu.ovh/",
+        });
+    </script>
+</body>
+</html>
