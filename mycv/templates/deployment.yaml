@@ -47,11 +47,18 @@ spec:
         env:
         - name: QDRANT_HOST
           value: http://cv-qdrant.cv.svc.cluster.local:6333
-        - name: OPENAI_API_KEY
+        - name: LOCALAI_BASE_URL
+          value: http://localai.localai.svc.cluster.local:8080/v1
+        - name: LOCALAI_API_KEY
           valueFrom:
             secretKeyRef:
-              name: openai-api-key
-              key: OPENAI_API_KEY
+              name: localai-api-key
+              key: api-key
+        - name: OPENROUTER_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: openrouter-api-key
+              key: api-key
 ---
 apiVersion: apps/v1
 kind: Deployment
