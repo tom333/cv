@@ -5,4 +5,5 @@ langchain-qdrant==1.1.0
 langchain-text-splitters==1.1.2
 langgraph==1.2.4
 python-dotenv==1.2.2
-qdrant-client==1.18.0
+# serveur Qdrant en 1.15.1 (chart mycv) : client minor <= serveur minor + 1
+qdrant-client==1.16.1
