@@ -48,9 +48,15 @@
 Thomas est marié, père de 3 enfants, 2 garçons de 11 et 9 ans et une fille de 3 ans.
 
 # Projet personnels
-* Server Kubernetes personnel
-  * Géré avec Argocd avec le pattern "Apps of Apps", publié à 100% sur github mais avec un accès sécurisé via github et les secrets sont externalisés sur un service tiers, Le cluster a accès au GPU du serveur pour augmenter la puissance de calcul 
-  * **MLOps, ArcgoCD, Github, open source** 
+* Plateforme IA self-hosted sur Kubernetes (100% GitOps)
+  * Cluster MicroK8s dont l'état est entièrement défini par un dépôt Git public, géré avec ArgoCD et le pattern "App of Apps"
+  * LLM auto-hébergé sur GPU avec LocalAI, interface de chat OpenWebUI
+  * Agent personnel autonome (Hermes) : bot Telegram, tâches planifiées, recherche web 100% self-hosted (SearXNG + API compatible Firecrawl self-hosted + navigateur headless)
+  * Secrets chiffrés et versionnés dans Git avec Sealed Secrets
+  * Mises à jour automatisées des charts avec Renovate (auto-merge minor/patch)
+  * Sécurité : protection IPS communautaire CrowdSec branchée sur Traefik, SSO oauth2-proxy (GitHub), terminal web sécurisé
+  * Stack data : PostgreSQL, Qdrant, JupyterLab (DuckDB, Marimo)
+  * **Kubernetes, ArgoCD, GitOps, Helm, LocalAI, GPU, Sealed Secrets, Renovate, CrowdSec, Traefik, open source**
 
 * Analyse d’activité professionnel  
   * Sur guichet unique entreprise, les usagers saisissent une description de leurs activités professionnelles. Le modèle développé suggère alors le code NAF associé. Conception entièrement automatisé du modèle, du téléchargement des données au déploiement du modèle, en passant par l'entraînement et le tuning des hyperparamètres  
@@ -95,6 +101,18 @@ Thomas est marié, père de 3 enfants, 2 garçons de 11 et 9 ans et une fille de
     * L'objectif étant de fournir un accès à un chatbot tout en le maîtrisant
     * ** RAG, crewai, langchain, streamlit, mcp, qdrant, mem0ai
 
+* **EN COURS** : Chatbot RAG « Mia » pour la DRHFPNC (en production sur l'intranet)
+    * Assistante RAG pour les agents publics de la fonction publique de Nouvelle-Calédonie : réponses ancrées dans le droit du travail public NC (statuts, délibérations, circulaires, fiches IntraRH, procédures internes) avec citation systématique des sources
+    * Agent ReAct (LangGraph) avec interface Chainlit, outils exposés via un serveur MCP dédié
+    * Gateway LiteLLM vers Gemini 2.5 Flash, embeddings gemini-embedding-001
+    * Recherche hybride pgvector avec reranking sémantique Vertex AI Ranking
+    * Mémoire conversationnelle persistante (checkpointer LangGraph sur PostgreSQL) : une conversation peut continuer après un redémarrage
+    * Évaluation systématique : dataset de référence rejoué à chaque évolution, scoring par LLM-juge, comparaison des runs dans un notebook marimo
+    * Observabilité OpenTelemetry de bout en bout (UI → agent → MCP → LLM) avec Phoenix (Arize)
+    * Ingestion multi-sources : Google Drive (~620 documents), scraping de l'intranet avec Playwright, site public et Juridoc (~37 000 chunks au total)
+    * Authentification OAuth (IdP interne) en production
+    * **RAG, LangGraph, Chainlit, MCP, LiteLLM, Gemini, pgvector, Vertex AI, évals LLM-juge, OpenTelemetry, Phoenix, Playwright**
+
 * **EN COURS** : Chatbot sur le code du travail calédonien
     * chatbot pour un support de premier niveau sur le ode du travail de la Nouvelle Calédonie
     * L'objectif est de soulager les équipes de la direction
@@ -108,6 +126,28 @@ Thomas est marié, père de 3 enfants, 2 garçons de 11 et 9 ans et une fille de
     * Il faut agréger toutes ces données toutes en les faisant correpondre aux différentiels officiels publiés sur les plateformes open data data.gouv.nc ou data.gouv.fr
     * Outils de traitement de données : mage.ai
     * **mage.ai, duckdb, bigquery **
+
+* **EN COURS** : Plateforme BI & gouvernance data self-service
+    * POC d'une stack BI / catalogue / gouvernance entièrement open source avec workflow self-service de demande d'accès aux données
+    * Apache Superset 6 pour la visualisation, OpenMetadata pour le catalogue de données et le lineage
+    * SSO unifié via Keycloak (OAuth2/OIDC) entre Superset et OpenMetadata
+    * Lakehouse DuckLake : requêtage DuckDB, catalogue PostgreSQL, stockage S3
+    * Access broker (Flask + Terraform) : workflow d'octroi d'accès automatisé, l'utilisateur demande l'accès à un dataset depuis le catalogue et les droits sont provisionnés par Terraform (provider Superset custom forké)
+    * Copilot IA intégré dans OpenMetadata : agent LangChain (Chainlit) avec outils OpenMetadata, MCP Superset et access broker
+    * Toute la configuration de l'instance Superset (connexions, datasets, rôles, utilisateurs) gérée par Terraform
+    * Orchestration locale 100% automatisée avec Tilt, migration en cours de Docker Compose vers Kubernetes (k3s)
+    * Développement d'un connecteur OpenMetadata custom pour DuckLake : ingestion de la hiérarchie complète (database → schéma → table → colonne), mapping des types DuckDB, statistiques de tables et de colonnes, et lineage entre vues et tables (extraction des tables sources du SQL via sqlglot)
+    * **Superset, OpenMetadata, Keycloak, DuckLake, DuckDB, Terraform, LangChain, Chainlit, MCP, Tilt, Kubernetes, sqlglot**
+
+* **EN COURS** : Pipelines de KPI financiers et modernisation du décisionnel
+    * Calcul des KPI des finances du gouvernement de la Nouvelle Calédonie et modèles IA associés
+    * Reprise des données de gestion financière Oracle (ASTRE / SURFI) sur un lakehouse DuckLake (DuckDB + S3)
+    * Orchestration avec Dagster, architecture Medallion : ingestion Bronze avec DLT (dagster-dlt), transformations avec Ibis (backend DuckDB)
+    * Qualité de données : Great Expectations + Dagster Asset Checks
+    * Détection d'anomalies sur les données financières avec scikit-learn (IsolationForest)
+    * Catalogage des données dans OpenMetadata
+    * Réponse aux demandes data de la direction : factures, liquidations, engagements, situation budgétaire
+    * **Dagster, DuckLake, DuckDB, DLT, Ibis, Great Expectations, scikit-learn, OpenMetadata, Oracle, uv, Ruff, pytest**
 
 * **EN COURS** : Déploiement d’une modern data stack on premise  
   * Pour certaines données “sensibles” qui ne peuvent être mises sur GCP et par volonté politique, le choix a été fait de rapatrier sur les infrastructures interne, la chaine de traitement de la donnée.

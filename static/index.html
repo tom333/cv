@@ -250,15 +250,16 @@
                                     <ul>
                                         <li>Modélisation : Scikit-learn, Catboost, Tensorflow</li>
                                         <li>Frameworks IA : LangChain, CrewAI, LangGraph</li>
-                                        <li>Architecture : RAG, Agents Autonomes</li>
+                                        <li>Architecture : RAG, Agents Autonomes, MCP</li>
+                                        <li>LLMOps : évals LLM-juge, Phoenix, OpenTelemetry, LiteLLM</li>
                                     </ul>
                                 </div>
                                 <div class="col-md-6">
                                     <h4>MLOps & Data Engineering</h4>
                                     <ul>
-                                        <li>Orchestration : ZenML, MLflow, Mage.ai</li>
-                                        <li>Data processing : Pandas, PySpark, GeoPandas</li>
-                                        <li>Bases de données : Qdrant, DuckDB, ClickHouse</li>
+                                        <li>Orchestration : Dagster, ZenML, MLflow, Mage.ai, DLT</li>
+                                        <li>Data processing : Pandas, PySpark, GeoPandas, Ibis, Polars</li>
+                                        <li>Bases de données : Qdrant, pgvector, DuckDB, ClickHouse, BigQuery</li>
                                     </ul>
                                 </div>
                                 <div class="col-md-6">
@@ -275,7 +276,7 @@
                                     <ul>
                                         <li>Backend : Python (FastAPI, Flask)</li>
                                         <li>Frontend & Data Apps : Streamlit, Chainlit, Gradio</li>
-                                        <li>BI : Apache Superset</li>
+                                        <li>BI &amp; Gouvernance : Apache Superset, OpenMetadata</li>
                                     </ul>
                                 </div>
                             </div>
@@ -291,8 +292,11 @@
                                 <div class="experience-title">Architecte data / Data Scientist</div>
                                 <ul>
                                     <li><div class="project-title">Chatbot interne avec IA Générative (RAG)</div> pour les agents de la fonction publique (crewai, langchain, qdrant).</li>
+                                    <li><div class="project-title">Chatbot RAG « Mia » en production sur l'intranet</div> assistante sur le droit du travail public NC : agent LangGraph + MCP, recherche hybride pgvector avec reranking Vertex AI, évaluation systématique par LLM-juge et observabilité OpenTelemetry / Phoenix.</li>
                                     <li><div class="project-title">Création d'une API centralisée des entreprises calédoniennes</div> avec des outils de traitement de données modernes (mage.ai, fastapi).</li>
                                     <li><div class="project-title">Modèle de prédiction de potentiel d'embauche</div> (similaire à "La Bonne Boîte") avec Catboost et scikit-learn.</li>
+                                    <li><div class="project-title">Plateforme BI &amp; gouvernance data self-service</div> Superset, OpenMetadata (catalogue, lineage), SSO Keycloak, lakehouse DuckLake, workflow d'octroi d'accès automatisé (Terraform), copilot IA intégré (LangChain) et développement d'un connecteur OpenMetadata custom pour DuckLake (hiérarchie, statistiques, lineage SQL).</li>
+                                    <li><div class="project-title">Pipelines de KPI financiers et modernisation du décisionnel</div> reprise des données de gestion financière Oracle (ASTRE / SURFI) sur un lakehouse DuckLake, orchestrée avec Dagster : ingestion DLT, transformations Ibis, qualité de données Great Expectations, détection d'anomalies (IsolationForest).</li>
                                     <li>Mise en place d'une infrastructure data sur GCP et création de modules Terraform pour l'automatisation des flux de données vers BigQuery.</li>
                                 </ul>
                             </div>
@@ -360,7 +364,7 @@
                                 <ul class="mt-2">
                                     <li><p class="mb-1"><em>Objectif : Prévision des prix des poissons sur le marché de Moselle.</em></p></li>
                                     <li><p class="mb-1"><strong>Stack :</strong> Scikit-learn (Iso Forest), Pandas, Détection d'anomalies, Dagster, MLflow.</p></li>
-                                    <li><p class="mb-1"><a href="https://prix-des-poissons.tgu.ovh/" target="_blank" rel="noopener noreferrer"><i class="bi bi-box-arrow-up-right"></i> Application Live</a></p></li>
+                                    <li><p class="mb-1"><a href="https://prix-poissons.tgu.ovh/" target="_blank" rel="noopener noreferrer"><i class="bi bi-box-arrow-up-right"></i> Application Live</a></p></li>
                                 </ul>
                             </div>
 
@@ -407,10 +411,11 @@
                              
                             <div class="experience-item">
                                 <div class="experience-date">Projet personnel (maintenance continue)</div>
-                                <div class="experience-title">Cluster Kubernetes auto-hébergé en 100% GitOps</div>
+                                <div class="experience-title">Plateforme IA self-hosted sur Kubernetes en 100% GitOps</div>
                                 <ul class="mt-2">
                                     <li>
                                         <p class="mb-1">Mise en place et maintenance d'un cluster Kubernetes (MicroK8s) dont l'état est entièrement défini par un dépôt Git. L'approche "App of Apps" avec ArgoCD et des charts Helm "maison" permet une gestion hiérarchique et un déploiement automatisé de l'ensemble des services.</p>
+                                        <p class="mb-1">LLM auto-hébergé sur GPU (LocalAI) avec interface OpenWebUI, agent personnel autonome (Hermes : bot Telegram, recherche web 100% self-hosted via SearXNG). Secrets chiffrés dans Git (Sealed Secrets), mises à jour automatisées (Renovate), protection IPS (CrowdSec), monitoring centralisé.</p>
                                         <p class="mb-1 mt-2">
                                             <strong>Sources :</strong> 
                                             <a href="https://github.com/tom333/my-kluster" target="_blank" rel="noopener noreferrer">Cluster (my-kluster)</a> | 
